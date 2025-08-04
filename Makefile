@@ -1,9 +1,36 @@
-NAME=libasm.a
+NAME = libasm.a
 
-# COMPILE
-all:
-	nasm -felf64 ft_strcmp.s
-	nasm -felf64 ft_strlen.s
-	nasm -felf64 ft_strcpy.s
-	gcc main.c ft_strcmp.o ft_strlen.o ft_strcpy.o -o test
+CC = nasm
+CFLAGS = -felf64 -g -F dwarf
 
+SRCS = ft_strlen.s	\
+	  ft_strcpy.s	\
+	  ft_strcmp.s	\
+	  ft_strdup.s	\
+	  ft_write.s	\
+	  ft_read.s		\
+	  ft_atoi_base.s	\
+	  ft_list_size.s	\
+	  ft_list_push_front.s
+
+OBJ_DIR = ./objs/
+OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.s=.o))
+
+all: $(NAME)
+
+$(NAME) : $(OBJS)
+	ar rcs $@ $^
+
+$(OBJ_DIR) :
+	mkdir -p $@
+
+$(OBJ_DIR)%.o : %.s | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $^ -o $@
+
+clean:
+	rm -rf $(OBJ_DIR)
+
+fclean: clean
+	rm -rf $(NAME)
+
+re: fclean all
