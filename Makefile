@@ -49,7 +49,7 @@ bonus :
 
 test: bonus
 	@gcc test.c $(NAME) -o $@
-	@./test
+	@valgrind ./test
 	@rm -f $@
 
 re: fclean all
