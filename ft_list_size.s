@@ -1,6 +1,6 @@
 global	ft_list_size
 
-section	.text
+	section	.text
 ; size_t	ft_lst_size(t_list *lst)
 ft_list_size:
 	xor	rax, rax

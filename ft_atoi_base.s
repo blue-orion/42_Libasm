@@ -18,11 +18,16 @@ ft_atoi_base:
 	mov		rdi, r8
 	mov		r8, rax				  ; base_len = ft_strlen(base);
 
-.skip_space:
+.skip_whitespace:
 	cmp		byte [rdi], 32
-	jne		.check_base_validate
+	je		.whitespace
+	cmp		byte [rdi], 9
+	jl		.check_base_validate
+	cmp		byte [rdi], 13
+	jg		.check_base_validate
+.whitespace:
 	inc		rdi
-	jmp		.skip_space
+	jmp		.skip_whitespace
 
 .check_base_validate:
 	; if (base_len < 2) error
@@ -61,6 +66,15 @@ ft_atoi_base:
 	je		.error
 	cmp		r9, 45
 	je		.error
+
+	cmp		r9, 32 ; whitespace 체크
+	je		.error
+	cmp		r9, 9
+	jl		.ok
+	cmp		r9, 13
+	jg		.ok
+	jmp		.error
+.ok:
 	inc		rdx
 	cmp		byte [rsi + rdx], 0
 	jne		.check_base_sign_loop
@@ -71,7 +85,7 @@ ft_atoi_base:
 	cmp		byte [rdi], 43
 	jne		.check_minus
 	inc		rdx
-	jmp	.loop
+	jmp		.loop
 
 .check_minus:
 	cmp		byte [rdi], 45
@@ -91,7 +105,7 @@ ft_atoi_base:
 	cmp		byte [rsi + rcx], r11b ; base[j] , s[i]
 	je		.found
 	inc		rcx
-	jmp	.find
+	jmp		.find
 
 .found:
 	mov		r11d, dword -32[rbp]

@@ -14,9 +14,14 @@ ft_strdup:
 	mov		rdi, rax
 
 	call	malloc wrt ..plt
+	test	rax, rax
+	jz		.error
 
 	mov		rdi, rax
 	mov		rsi, r8
 	call	ft_strcpy wrt ..plt
 
+	ret
+
+.error:
 	ret

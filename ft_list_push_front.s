@@ -8,13 +8,15 @@ ft_list_push_front:
 	mov		rbp, rsp
 	sub		rsp, 16
 	mov		qword -16[rbp], rdi
+	mov		qword -8[rbp], rsi
 
 	mov		rdi, 16
 	call	malloc wrt ..plt
-	text	al, al
+	test	rax, rax
 	jz		.error
 
-	mov		[rax], rsi
+	mov		rdx, qword -8[rbp]
+	mov		[rax], rdx
 	mov		rdi, qword -16[rbp]
 	mov		rdi, [rdi]
 	mov		[rax + 8], rdi
