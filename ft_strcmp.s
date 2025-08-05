@@ -23,7 +23,7 @@ ft_strcmp:
   jmp .loop
 
 .done:
-  movzx eax, byte [rdi + rcx]
-  movzx ebx, byte [rsi + rcx]
-  sub al, bl
+  movzx	eax, byte [rdi + rcx]
+  movzx	ebx, byte [rsi + rcx]
+  sub	eax, ebx
   ret
