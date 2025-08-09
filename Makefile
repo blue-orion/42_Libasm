@@ -3,6 +3,9 @@ NAME = libasm.a
 CC = nasm
 CFLAGS = -felf64 -g -F dwarf
 
+SRC_DIR = ./srcs/
+OBJ_DIR = ./objs/
+
 SRCS =	ft_strlen.s				\
 		ft_strcpy.s				\
 		ft_strcmp.s				\
@@ -11,13 +14,12 @@ SRCS =	ft_strlen.s				\
 		ft_read.s
 
 BONUS_SRCS =					\
-		ft_atoi_base.s			\
-		ft_list_size.s			\
-		ft_list_push_front.s	\
-		ft_list_sort.s			\
-		ft_list_remove_if.s
+		ft_atoi_base_bonus.s			\
+		ft_list_size_bonus.s			\
+		ft_list_push_front_bonus.s	\
+		ft_list_sort_bonus.s			\
+		ft_list_remove_if_bonus.s
 
-OBJ_DIR = ./objs/
 OBJS = $(addprefix $(OBJ_DIR), $(SRCS:.s=.o))
 BONUS_OBJS = $(addprefix $(OBJ_DIR), $(BONUS_SRCS:.s=.o))
 
@@ -27,7 +29,7 @@ else
     OBJ = $(OBJS)
 endif
 
-all: $(NAME)
+all : $(NAME)
 
 $(NAME) : $(OBJ)
 	ar rcs $@ $^
@@ -35,7 +37,7 @@ $(NAME) : $(OBJ)
 $(OBJ_DIR) :
 	mkdir -p $@
 
-$(OBJ_DIR)%.o : %.s | $(OBJ_DIR)
+$(OBJ_DIR)%.o : $(SRC_DIR)%.s | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $^ -o $@
 
 clean:
